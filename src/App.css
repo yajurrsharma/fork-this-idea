@@ -3,14 +3,13 @@ body {
   padding: 0;
   background-color: #181414;
   font-family: 'Press Start 2P', cursive;
-  overflow: hidden;
+  overflow-x: hidden;
 }
 
 .App {
   position: relative;
   width: 100vw;
   height: 100vh;
-  overflow: hidden;
 }
 
 .particles-bg {
@@ -26,17 +25,25 @@ body {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%); /* perfectly centers */
   z-index: 1;
-  font-size: 2rem;
-  color: #288cfc;
   text-align: center;
-  transition: top 1.5s ease;
+  color: #288cfc;
+  transition: top 1.5s ease, transform 1.5s ease, font-size 1.5s ease;
+  font-size: 3rem;
+  max-width: 100%;
+  word-wrap: break-word;
+  
 }
 
+
 .text-wrapper.float-up {
-  top: 10%;
+  top: 3%;
+  transform: translate(-50%, 0);
+  font-size: 2rem;
 }
+
+
 .card-container {
   position: relative;
   z-index: 1;
@@ -46,9 +53,10 @@ body {
   gap: 2rem;
   padding: 2rem;
   margin-top: 200px;
-  opacity: 0;
+  opacity: 100;
   transform: translateY(20px);
   transition: opacity 1s ease, transform 1s ease;
+
 }
 
 .card-container.show {
@@ -64,36 +72,67 @@ body {
   padding: 1rem;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
   transition: all 0.3s ease-in-out;
+  margin-top: 120px;
 }
-
-.card-container {
-  position: relative;
-  z-index: 1;
+.terminal-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 2rem;
-  padding: 2rem;
-  margin-top: 200px;
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 1s ease, transform 1s ease;
+  gap: 40px 40px; 
+  max-width: 1600px;
+  margin: 60px auto 0 auto; 
+  padding: 0 20px;
+  max-height: 90vh;
 }
 
-.card-container.show {
+
+@media (max-width: 1024px) {
+  .terminal-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .terminal-container {
+    grid-template-columns: 1fr;
+  }
+}
+.terminal-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 55px;
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  overflow-y: auto;
+
+}
+
+pre {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.terminal-card {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.terminal-card.fade-in {
   opacity: 1;
   transform: translateY(0);
 }
 
 @media (max-width: 768px) {
-  .card-container {
-    flex-direction: column;
-    align-items: center;
-    padding: 1rem;
+  .fork-text {
+    font-size: 36px;
   }
+}
 
-  .card {
-    width: 100%;
-    max-width: 90vw;
+@media (max-width: 480px) {
+  .fork-text {
+    font-size: 28px;
   }
 }

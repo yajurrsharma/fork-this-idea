@@ -1,4 +1,3 @@
-// src/BlurText.js
 import { motion } from 'framer-motion';
 import { useEffect, useRef, useState, useMemo } from 'react';
 

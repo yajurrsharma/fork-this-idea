@@ -1,19 +1,31 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import BlurText from './BlurText';
 import Particles from './Particles';
-import Terminal from './Terminal'; // import terminal
+import Terminal from './Terminal';
 import './App.css';
 
 function App() {
   const [moveToTop, setMoveToTop] = useState(false);
   const [showTerminal, setShowTerminal] = useState(false);
+  const [ideas, setIdeas] = useState([]);
 
   const handleAnimationComplete = () => {
     setTimeout(() => {
       setMoveToTop(true);
-      setTimeout(() => setShowTerminal(true), 1500); // delay to match CSS transition
-    }, 500); // optional delay
+      setTimeout(() => setShowTerminal(true), 1500);
+    }, 500);
   };
+
+  useEffect(() => {
+    if (showTerminal) {
+      fetch("https://8e867e63-b522-4f6f-9b74-de6c86132217-00-21vr9t2f9bfog.pike.replit.dev:3000/ideas") // replace with actual URL
+        .then(res => res.json())
+        .then(data => {
+          if (data.ideas) setIdeas(data.ideas);
+        })
+        .catch(err => console.error("Failed to fetch ideas:", err));
+    }
+  }, [showTerminal]);
 
   return (
     <div className="App">
@@ -36,13 +48,22 @@ function App() {
           animateBy="words"
           direction="top"
           onAnimationComplete={handleAnimationComplete}
-          className="text-2xl mb-8"
+          className="fork-text"
+
         />
       </div>
 
       {showTerminal && (
-        <div className="terminal-container">
-          <Terminal shouldStartTyping={showTerminal} />
+        <div className="terminal-grid">
+          {ideas.map((idea, index) => (
+              <Terminal
+                key={index}
+                shouldStartTyping={true}
+                username={idea.username}
+                title={idea.title}
+              />
+            ))}
+
         </div>
       )}
     </div>

@@ -96,6 +96,8 @@ const Particles = ({
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
+    container.style.height = `${document.body.scrollHeight}px`;
+
 
     const renderer = new Renderer({ depth: false, alpha: true });
     const gl = renderer.gl;
